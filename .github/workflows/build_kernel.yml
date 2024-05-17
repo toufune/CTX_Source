@@ -18,6 +18,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y gcc-9 g++-9 gcc-9-aarch64-linux-gnu
 
+      - name: Set up cross-compiler
+        run: |
+          sudo apt-get install -y gcc-9-aarch64-linux-gnu
+          echo "/usr/bin" >> $GITHUB_PATH
+
       - name: Build kernel
         working-directory: kernel-4.14
         run: |
