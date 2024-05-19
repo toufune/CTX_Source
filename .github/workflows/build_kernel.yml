@@ -2,6 +2,9 @@ name: Build Kernel
 
 on:
   push:
+    paths:
+      - '.github/workflows/build-kernel.yml'
+      - 'kernel/**'
   workflow_dispatch:
 
 jobs:
@@ -13,28 +16,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Add Xenial repository
-        run: sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu/ xenial main universe"
+      - name: Cache
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu
+          key: gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu
 
-      - name: Update package list
-        run: sudo apt-get update
-
-      - name: Install GCC 7
+      - name: Install toolchain
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: kernel-4.14
         run: |
-          sudo apt-get install -y gcc-7 g++-7 gcc-7-aarch64-linux-gnu
-
-      - name: Set up cross-compiler
-        run: |
-          sudo ln -s /usr/bin/aarch64-linux-gnu-gcc-7 /usr/bin/aarch64-linux-gnu-gcc
-          echo "/usr/bin" >> $GITHUB_PATH
+          curl -OL https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-i686_aarch64-linux-gnu.tar.xz
+          tar xvf *tar.xz  -C ./
 
       - name: Build kernel
         working-directory: kernel-4.14
         run: |
           export ARCH=arm64
-          export CROSS_COMPILE=aarch64-linux-gnu-
+          export CROSS_COMPILE=$(pwd)/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
           make a05bd_defconfig
-          make -j8
+          make -j2
 
       - name: Upload
         uses: actions/upload-artifact@v3
