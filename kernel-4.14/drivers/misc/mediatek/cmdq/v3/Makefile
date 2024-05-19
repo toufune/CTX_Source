@@ -21,8 +21,7 @@ ccflags-y += -I$(srctree)/drivers/misc/mediatek/smi/ \
              -I$(srctree)/drivers/misc/mediatek/mdp/ \
              -I$(srctree)/drivers/iommu/ \
              -I$(srctree)/drivers/misc/mediatek/m4u/$(MTK_PLATFORM) \
-             -I$(srctree)/drivers/misc/mediatek/mach/$(MTK_PLATFORM)/include \
-             -I$(srctree)/drivers/misc/mediatek/cmdq/v3/mt8168/
+             -I$(srctree)/drivers/misc/mediatek/mach/$(MTK_PLATFORM)/include
 
 
 ifneq ($(filter mt8183 mt8168,$(shell echo $(MTK_PLATFORM)|tr A-Z a-z)),)
@@ -61,7 +60,8 @@ include $(srctree)/drivers/misc/mediatek/teei/Makefile.include
 endif	# end of CONFIG_MICROTRUST_TEE_SUPPORT
 
 ccflags-y += -I$(srctree)/drivers/misc/mediatek/cmdq/v3/inc/cmdq_sec_dr \
-             -I$(srctree)/drivers/misc/mediatek/cmdq/v3/inc/cmdq_sec_tl
+             -I$(srctree)/drivers/misc/mediatek/cmdq/v3/inc/cmdq_sec_tl \
+             -I$(srctree)/drivers/misc/mediatek/cmdq/v3/mt8168/
 
 ccflags-y += -DCMDQ_SECURE_PATH_SUPPORT
 
