@@ -16,11 +16,11 @@ jobs:
       - name: Install GCC 9
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-9 g++-9 gcc-9-aarch64-linux-gnu
+          sudo apt-get install -y gcc g++ gcc-aarch64-linux-gnu
 
       - name: Set up cross-compiler
         run: |
-          sudo apt-get install -y gcc-9-aarch64-linux-gnu
+          sudo apt-get install -y gcc-aarch64-linux-gnu
           echo "/usr/bin" >> $GITHUB_PATH
 
       - name: Build kernel
@@ -29,7 +29,7 @@ jobs:
           export ARCH=arm64
           export CROSS_COMPILE=aarch64-linux-gnu-
           make a05bd_defconfig
-          make -j2
+          make -j8
 
       - name: Upload
         uses: actions/upload-artifact@v3
