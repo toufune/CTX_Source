@@ -3,7 +3,7 @@ name: Build Kernel
 on:
   push:
     paths:
-      - '.github/workflows/build-kernel.yml'
+      - '.github/workflows/build_kernel.yml'
       - 'kernel/**'
   workflow_dispatch:
 
