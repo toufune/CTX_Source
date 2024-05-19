@@ -21,7 +21,8 @@ ccflags-y += -I$(srctree)/drivers/misc/mediatek/smi/ \
              -I$(srctree)/drivers/misc/mediatek/mdp/ \
              -I$(srctree)/drivers/iommu/ \
              -I$(srctree)/drivers/misc/mediatek/m4u/$(MTK_PLATFORM) \
-             -I$(srctree)/drivers/misc/mediatek/mach/$(MTK_PLATFORM)/include
+             -I$(srctree)/drivers/misc/mediatek/mach/$(MTK_PLATFORM)/include \
+             -I$(srctree)/drivers/misc/mediatek/cmdq/v3/mt8168/
 
 
 ifneq ($(filter mt8183 mt8168,$(shell echo $(MTK_PLATFORM)|tr A-Z a-z)),)
